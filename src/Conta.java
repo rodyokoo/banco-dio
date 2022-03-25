@@ -1,7 +1,7 @@
 
 public abstract class Conta implements IConta{
 
-	private static final int AGENCIA_FINAL = 1;
+	private static int AGENCIA_FINAL = 1;
 	private static int SEQUENCIAL = 1;
 	
 	protected int agencia;
@@ -11,6 +11,12 @@ public abstract class Conta implements IConta{
 	
 	public Conta(Cliente cliente) {
 		this.agencia = Conta.AGENCIA_FINAL;
+		this.numero = SEQUENCIAL++;
+		this.cliente = cliente;
+	}
+	
+	public Conta(Cliente cliente, int agencia) {
+		this.agencia = agencia;
 		this.numero = SEQUENCIAL++;
 		this.cliente = cliente;
 	}
@@ -48,6 +54,11 @@ public abstract class Conta implements IConta{
 		System.out.println(String.format("Agência: %d", agencia));
 		System.out.println(String.format("Conta: %d", numero));
 		System.out.println(String.format("Titular: %s", cliente.getNome()));
+		if(ValidaCPF.isCPF(cliente.getCpf())) {
+			System.out.println(String.format("CPF: %s", ValidaCPF.imprimeCPF(cliente.getCpf())));			
+		} else {
+			System.out.println(String.format("CPF inválido!"));						
+		}
 		System.out.println(String.format("Saldo: R$ %.2f\n", saldo));
 	}
 }
